@@ -3,6 +3,7 @@ package com.example.viewpager
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyRow
@@ -12,51 +13,33 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.viewpager.ui.onboard.Navigation
 import com.example.viewpager.ui.onboard.OnBoarding
+import com.example.viewpager.ui.theme.OnBoardingTheme
 import com.example.viewpager.ui.theme.ViewPagerTheme
 import com.google.accompanist.pager.ExperimentalPagerApi
 
 class MainActivity : ComponentActivity() {
+
     @ExperimentalPagerApi
+    @ExperimentalAnimationApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            OnBoarding()
+            OnBoardingTheme {
+                window.statusBarColor = MaterialTheme.colors.background.toArgb()
+                window.navigationBarColor = MaterialTheme.colors.background.toArgb()
+
+                androidx.compose.material.Surface(color = MaterialTheme.colors.background,modifier = Modifier.fillMaxSize()) {
+
+                    Navigation()
+
+                }
+            }
         }
-    }
-}
-
-@Composable
-fun HorizontalScroll(){
-    LazyRow{
-        itemsIndexed(items = scenesImages()){ index, item ->
-            Image(painter = painterResource(id = item),
-                contentDescription = "Scenes",
-                modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop
-            )
-        }
-    }
-}
-
-fun scenesImages() = mutableListOf(
-    R.drawable.crash,
-    R.drawable.magic,
-    R.drawable.night
-)
-
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    ViewPagerTheme {
-        Greeting("Android")
     }
 }
