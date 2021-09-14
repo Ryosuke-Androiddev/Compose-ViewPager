@@ -23,22 +23,27 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.viewpager.R
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.launch
 
+
 @ExperimentalPagerApi
 @Composable
-fun OnBoarding(){
-
+fun OnBoarding(navController: NavController){
     val scope = rememberCoroutineScope()
 
     Column(
         Modifier.fillMaxSize()
     ) {
-        TopSection()
+        TopSection(navController = navController)
 
         val items = OnBoardingItem.get()
         val state = rememberPagerState(pageCount = items.size)
@@ -65,7 +70,7 @@ fun OnBoarding(){
 }
 
 @Composable
-fun TopSection(){
+fun TopSection(navController: NavController){
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -82,12 +87,13 @@ fun TopSection(){
 
         //skip button
         TextButton(
-            onClick = {},
+            onClick = {navController.navigate("destinationB")},
             modifier = Modifier.align(Alignment.CenterEnd)
         ) {
             Text("Skip",color = MaterialTheme.colors.onBackground)
         }
     }
+
 }
 
 @Composable
@@ -106,13 +112,11 @@ fun BottomSection(
         Indicators(size = size, index = index)
 
         //next button
-        FloatingActionButton(
+        TextButton(
             onClick = onNextClicked,
-            modifier = Modifier.align(CenterEnd),
-            backgroundColor = MaterialTheme.colors.primary,
-            contentColor = MaterialTheme.colors.onPrimary
+            modifier = Modifier.align(Alignment.CenterEnd)
         ) {
-            Icon(Icons.Outlined.KeyboardArrowRight, null)
+            Text("Get Started",color = MaterialTheme.colors.onBackground)
         }
     }
 }
@@ -177,6 +181,33 @@ fun OnBoardingItem(
             text = stringResource(id = item.text),
             color = MaterialTheme.colors.onBackground.copy(alpha = 0.8f),
             textAlign = TextAlign.Center
+        )
+    }
+}
+
+@ExperimentalPagerApi
+@Composable
+fun Navigation() {
+
+    val navController = rememberNavController()
+    NavHost(navController = navController, startDestination = "destinationA" ){
+        composable("destinationA"){ OnBoarding(navController = navController) }
+        composable("destinationB"){DestinationB()}
+    }
+}
+
+
+@Composable
+fun DestinationB(){
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Text(
+            text = "Destination",
+            fontSize = 100.sp,
+            fontWeight = FontWeight.ExtraBold
         )
     }
 }

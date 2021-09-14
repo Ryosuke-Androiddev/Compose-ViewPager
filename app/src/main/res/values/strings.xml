@@ -1,12 +1,12 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">ViewPager</string>
 
-    <string name="onBoardingTitle1">Capture the moment</string>
-    <string name="onBoardingText1">You are not alone. You have unique \n ability to go to another world</string>
+    <string name="onBoardingTitle1" >Get Started</string>
+    <string name="onBoardingText1" >It is time to learn Vocabulary \n you can go to another world</string>
 
-    <string name="onBoardingTitle2">Live The life</string>
-    <string name="onBoardingText2">In daily lives, we often rush our tasks \n trying get them finish</string>
+    <string name="onBoardingTitle2">Just Do it !!</string>
+    <string name="onBoardingText2">In daily tasks make you Strong! \n trying get them finish</string>
 
-    <string name="onBoardingTitle3">Play the beat</string>
-    <string name="onBoardingText3">Most beginner producers learn make \n creating by simple beats</string>
+    <string name="onBoardingTitle3">Play with Friends</string>
+    <string name="onBoardingText3">The Most important thing is Fun! \n Playing with your Friends it is better than alone!</string>
 </resources>
