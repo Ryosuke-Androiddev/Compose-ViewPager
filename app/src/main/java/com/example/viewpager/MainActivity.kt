@@ -18,8 +18,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.viewpager.ui.navigation.ViewPagerAndNavigation
-import com.example.viewpager.ui.onboard.Navigation
-import com.example.viewpager.ui.onboard.OnBoarding
 import com.example.viewpager.ui.theme.OnBoardingTheme
 import com.example.viewpager.ui.theme.ViewPagerTheme
 import com.google.accompanist.pager.ExperimentalPagerApi
