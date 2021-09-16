@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.viewpager.ui.navigation.ViewPagerAndNavigation
 import com.example.viewpager.ui.onboard.Navigation
 import com.example.viewpager.ui.onboard.OnBoarding
 import com.example.viewpager.ui.theme.OnBoardingTheme
@@ -36,7 +37,7 @@ class MainActivity : ComponentActivity() {
 
                 androidx.compose.material.Surface(color = MaterialTheme.colors.background,modifier = Modifier.fillMaxSize()) {
 
-                    Navigation()
+                    ViewPagerAndNavigation()
 
                 }
             }
