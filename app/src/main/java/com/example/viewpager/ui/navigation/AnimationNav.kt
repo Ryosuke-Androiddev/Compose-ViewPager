@@ -212,6 +212,13 @@ fun OnBoardingItems(
 
 @Composable
 fun SecondLayout(){
-    Text(text = "Congrats!")
+    Column(
+        modifier = Modifier
+            .fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Text(text = "Congrats!")
+    }
 }
 
