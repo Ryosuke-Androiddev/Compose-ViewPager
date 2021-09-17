@@ -69,4 +69,7 @@ dependencies {
 
     //Navigation
     implementation("androidx.navigation:navigation-compose:2.4.0-alpha06")
+
+    //Material Design
+    implementation "androidx.compose.material:material-icons-extended:$compose_version"
 }
