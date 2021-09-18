@@ -18,8 +18,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.focusModifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -32,6 +34,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
+import com.example.viewpager.R
 import com.example.viewpager.ui.onboard.OnBoardingItem
 import com.example.viewpager.utility.Constants.NAVIGATION_KEY
 import com.example.viewpager.utility.Constants.SECOND_SCREEN
@@ -106,7 +109,9 @@ fun ViewPagerLayout(navController: NavController){
             size = items.size,
             index = state.currentPage
         ) {
-            if (state.currentPage + 1 < items.size) {
+            if (state.currentPage >= 2){
+                navController.navigate(Screen.SecondScreen.route)
+            } else {
                 scope.launch {
                     state.scrollToPage(state.currentPage + 1)
                 }
@@ -146,7 +151,7 @@ fun TopSection(navController: NavController){
 fun BottomSections(
     size: Int,
     index: Int,
-    onNextClicked: ()->Unit
+    onNextClicked: ()->Unit,
 ){
     Box(
         modifier = Modifier
@@ -242,8 +247,29 @@ fun SecondLayout(navController: NavController){
         modifier = Modifier
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
     ) {
+        Image(
+            imageVector = Icons.Filled.Person,
+            contentDescription = null,
+            modifier = Modifier
+                .size(200.dp)
+                .offset(y = 50.dp)
+        )
+        Text(
+            text = "Vocabulary",
+            fontSize = 30.sp,
+            modifier = Modifier
+                .offset(y = 40.dp),
+            fontWeight = FontWeight.Bold
+            )
+
+        Spacer(Modifier.padding(100.dp))
+
+        Text(
+            text = "put your name",
+            modifier = Modifier.offset(x = -105.dp, y = -5.dp),
+            fontFamily = FontFamily.Serif
+        )
         OutlinedTextField(
             value = text,
             onValueChange = {
@@ -253,7 +279,7 @@ fun SecondLayout(navController: NavController){
                     Text(text = "name")
             },
             keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Email,
+                keyboardType = KeyboardType.Ascii,
                 imeAction = ImeAction.Go
             ),
             leadingIcon= {
@@ -281,7 +307,8 @@ fun RoundedButton(
             },
             shape = CircleShape,
             elevation = ButtonDefaults.elevation(0.dp,0.dp),
-            contentPadding = PaddingValues(20.dp,12.dp)
+            contentPadding = PaddingValues(20.dp,12.dp),
+            modifier = Modifier.offset(x=120.dp, y=16.dp)
         ) {
             Text(text = "Send")
         }
