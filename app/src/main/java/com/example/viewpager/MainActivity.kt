@@ -17,9 +17,13 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.viewpager.ui.navigation.TestStudyCardDeck
+import com.example.viewpager.ui.navigation.TestStudyCardFrontView
+import com.example.viewpager.ui.navigation.TestStudyCardView
 import com.example.viewpager.ui.navigation.ViewPagerAndNavigation
 import com.example.viewpager.ui.theme.OnBoardingTheme
 import com.example.viewpager.ui.theme.ViewPagerTheme
+import com.example.viewpager.utility.TestNiceButton
 import com.google.accompanist.pager.ExperimentalPagerApi
 
 class MainActivity : ComponentActivity() {
@@ -35,8 +39,13 @@ class MainActivity : ComponentActivity() {
 
                 androidx.compose.material.Surface(color = MaterialTheme.colors.background,modifier = Modifier.fillMaxSize()) {
 
-                    ViewPagerAndNavigation()
+                    //ViewPagerAndNavigation()
 
+                    //TestNiceButton()
+                    //TestStudyCardFrontView()
+                    //TestStudyCardDeck()
+
+                    ViewPagerAndNavigation()
                 }
             }
         }
