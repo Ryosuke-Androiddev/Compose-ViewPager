@@ -1,6 +1,8 @@
 package com.example.viewpager.ui.navigation
 
+import android.text.style.BackgroundColorSpan
 import android.widget.Space
+import android.widget.Toast
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.spring
@@ -8,7 +10,9 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
@@ -41,6 +45,13 @@ import com.example.viewpager.utility.Constants.SECOND_SCREEN
 import com.example.viewpager.utility.Constants.THIRD_SCREEN
 import com.example.viewpager.utility.Constants.THIRD_SCREEN_ROUTE
 import com.example.viewpager.utility.Constants.TOP_SCREEN
+import com.example.viewpager.utility.Constants.backSideColor
+import com.example.viewpager.utility.Constants.cornerRadiusBig
+import com.example.viewpager.utility.Constants.normalElevation
+import com.example.viewpager.utility.Constants.normalSpace
+import com.example.viewpager.utility.Constants.primaryColor
+import com.example.viewpager.utility.Constants.smallSpace
+import com.example.viewpager.utility.NiceButton
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
@@ -292,7 +303,17 @@ fun SecondLayout(navController: NavController){
             modifier = Modifier
                 .fillMaxWidth(0.8f)
         )
+        ReturnToastMessage(text = text)
         RoundedButton(text = text, navController = navController)
+    }
+}
+
+@Composable
+fun ReturnToastMessage(
+    text: String
+){
+    if (text.isEmpty()){
+
     }
 }
 
@@ -324,5 +345,133 @@ fun ThirdScreen(name: String?){
     ) {
         Text(text = "$name Memorize these phases.",
             Modifier.padding(50.dp))
+
+        
+        TestStudyCardView()
     }
 }
+
+enum class CardFlipState {
+    FRONT_FACE,
+    BACK_FACE,
+    FLIP_BACK,
+    FLIP_FRONT
+}
+
+enum class CardSwipeState {
+    INITIAL,
+    SWIPED,
+    DRAGGING
+}
+
+@Composable
+fun StudyCardView(
+    modifier: Modifier = Modifier,
+    side: CardFlipState = CardFlipState.FRONT_FACE,
+    backgroundColor: Color = backSideColor,
+    content: @Composable (Color) -> Unit,
+    bottomBar: @Composable (Color) -> Unit
+){
+    val color = if (side == CardFlipState.FRONT_FACE) backgroundColor
+    else backSideColor
+        Surface(
+            modifier = modifier,
+            shape = RoundedCornerShape(cornerRadiusBig),
+            color = color,
+            elevation = normalElevation,
+            content = {
+                Scaffold(
+                    modifier = Modifier
+                        .fillMaxSize(),
+                    topBar = {},
+                    bottomBar = {bottomBar(backgroundColor)},
+                    content = {content(color)}
+                )
+            }
+        )
+}
+
+@Composable
+fun StudyCardsContent(data: String, backgroundColor: Color){
+    Column(
+        modifier = Modifier
+            .fillMaxHeight()
+            .fillMaxWidth()
+            .background(backgroundColor),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = data,
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .padding(normalSpace),
+            style = MaterialTheme.typography.h6,
+            textAlign = TextAlign.Center
+        )
+    }
+}
+
+@Composable
+fun StudyCardsBottomBar(
+    index: Int,
+    count: Int,
+    side: CardFlipState = CardFlipState.FRONT_FACE,
+    frontSideColor: Color,
+    leftActionHandler: (CardFlipState) -> Unit = {},
+    rightActionHandler: () -> Unit = {}
+){
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceEvenly,
+        modifier = Modifier.padding(smallSpace)
+    ) {
+        val buttonColor = if (side == CardFlipState.FRONT_FACE) backSideColor else frontSideColor
+        val leftTitle = if (side == CardFlipState.FRONT_FACE) "Peep" else "Back"
+        val rightTitle = "Go"
+        NiceButton(
+            title = leftTitle,
+            backgroundColor = buttonColor,
+            onClick = { leftActionHandler.invoke(side) }
+        )
+        Spacer(Modifier.weight(1f))
+        Text("${index + 1} of $count")
+        Spacer(Modifier.weight(1f))
+        NiceButton(
+            title = rightTitle,
+            backgroundColor = buttonColor,
+            onClick = { rightActionHandler.invoke() }
+        )
+    }
+}
+
+val cardWidth = 350.dp
+val cardHeight = 380.dp
+
+const val paddingOffset = 32f
+const val LOREM_IPSUM_FRONT = "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+const val LOREM_IPSUM_BACK =
+    "Integer dolor nisl, finibus eget dignissim sit amet, semper vel ipsum."
+
+@Composable
+fun TestStudyCardFrontView() {
+    StudyCardView(
+        backgroundColor = primaryColor,
+        side = CardFlipState.FRONT_FACE,
+        modifier = Modifier.size(cardWidth, cardHeight),
+        content = { frontSideColor ->
+            StudyCardsContent(
+                LOREM_IPSUM_FRONT,
+                frontSideColor
+            )
+        },
+        bottomBar = { frontSideColor ->
+            StudyCardsBottomBar(
+                0, 1, CardFlipState.FRONT_FACE, frontSideColor,
+                leftActionHandler = { },
+                rightActionHandler = { }
+            )
+        }
+    )
+}
+
