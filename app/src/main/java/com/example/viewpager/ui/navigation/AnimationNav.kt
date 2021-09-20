@@ -21,11 +21,13 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -256,30 +258,37 @@ fun SecondLayout(navController: NavController){
     }
     Column(
         modifier = Modifier
-            .fillMaxSize(),
+            .fillMaxSize()
+            .background(MaterialTheme.colors.secondary),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Image(
-            imageVector = Icons.Filled.Person,
+            painter = painterResource(id = R.drawable.ic_fire),
             contentDescription = null,
             modifier = Modifier
                 .size(200.dp)
                 .offset(y = 50.dp)
+//                .background(MaterialTheme.colors.primary)
+//                .padding(12.dp)
         )
         Text(
             text = "Vocabulary",
             fontSize = 30.sp,
             modifier = Modifier
                 .offset(y = 40.dp),
-            fontWeight = FontWeight.Bold
-            )
+//                .background(MaterialTheme.colors.primary)
+//                .padding(12.dp),
+            fontWeight = FontWeight.Bold,
+            fontStyle = FontStyle.Italic
+        )
 
         Spacer(Modifier.padding(100.dp))
 
         Text(
             text = "put your name",
             modifier = Modifier.offset(x = -105.dp, y = -5.dp),
-            fontFamily = FontFamily.Serif
+            fontStyle = FontStyle.Italic,
+            fontWeight = FontWeight.Bold
         )
         OutlinedTextField(
             value = text,
@@ -329,7 +338,7 @@ fun RoundedButton(
             shape = CircleShape,
             elevation = ButtonDefaults.elevation(0.dp,0.dp),
             contentPadding = PaddingValues(20.dp,12.dp),
-            modifier = Modifier.offset(x=120.dp, y=16.dp)
+            modifier = Modifier.offset(x=120.dp, y=16.dp),
         ) {
             Text(text = "Send")
         }
