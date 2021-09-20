@@ -44,4 +44,6 @@ object Constants {
 
     // part. 3
     const val animationTime = 350
+
+    const val BASE_URL = "http://192.168.2.105:8081"
 }
